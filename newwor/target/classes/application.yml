@@ -1,0 +1,40 @@
+server:
+  port: 9099
+spring:
+#  profiles:
+#    active: test
+  application:
+    name: newwork
+    #thymeleaf
+#    thymeleaf:
+#      cache: false
+#      prefix: classpath:/templates/
+#      check-template-location: true
+#      suffix: .html
+#      encoding: utf-8
+#      mode: HTML
+#    #这个是关键，放开springboot对静态资源的拦截
+#    mvc:
+#      static-path-pattern: /static/**
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/integration?useUnicode=true&useSSL=false&allowMultiQueries=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: info #日志级别 root表示所有包，也可以单独配置具体包 fatal error warn info debug trace off
+HKhost: 10.157.72.73:443
+HKappKey: 21154220
+HKappSecret: ZlIKrBLN7snIf1OkFiTz
+product:
+  name: "/home/wwwadmin/newwork"
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+#swagger:
+#  enabled: true
+#  application-name: newwork
+#  application-version: 1.0
+# # application-description: springdoc openapi整合Demo
+#  try-host: http://localhost:9099

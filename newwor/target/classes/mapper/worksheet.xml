@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Worksheetmapper">
+    <select id="selectUser"  resultType="Map">
+      select sheet_id from procedurenode t where t.node_nameno=(SELECT u.dept_no FROM usermssage u where u.user_no=#{user_no}) GROUP BY t.sheet_id
+    </select>
+    <select id="selectAllDept"  resultType="Map">
+select t.dept_onename,t.dept_oneno  from deptmssage t GROUP BY t.dept_onename,t.dept_oneno
+    </select>
+    <select id="selectAllDeptTwo"  resultType="Map">
+select t.dept_no,t.dept_name  from deptmssage t  where t.dept_oneno=#{dept_oneno}
+    </select>
+    <select id="selectAllDb" resultType="Map">
+       	select sheet_id from procedurenode y ,
+	(select t.event_id,min(t.node_level)as a from procedurenode t where t.node_depttype='1' and t.node_type='0' and t.sheet_id is not null group by t.event_id)a
+	where y.event_id= a.event_id and y.node_level=a.a and   now()>y.node_endtime
+    </select>
+
+    <select id="selectcs" resultType="Map">
+     select * from  procedurenode p where p.sheet_id=${sheet_id}  and now()>p.node_endtime and p.node_type!='2'
+    </select>
+    <select id="selectsp" resultType="Map">
+     select * from  procedurenode p where p.sheet_id=${sheet_id}   and p.node_type!='2'
+    </select>
+    <select id="sheetAllDbcount" resultType="long">
+        select count(1) from worksheet
+        where  1=1
+        <if test="sheet_id != null and sheet_id !=''">
+           and id in (${sheet_id})
+        </if>
+    </select>
+    <select id="selectAllDbfy"  resultType="com.Mssage.SheetMssage">
+        select * from worksheet
+        where  1=1
+        <if test="sheet_id != null and sheet_id !=''">
+            and  id in (${sheet_id})
+        </if>
+        limit #{page},#{size}
+    </select>
+
+    <select id="selectAllWorksheetMssage" resultType="Map">
+    select * from worksheet where event_id=#{event_id}
+    </select>
+    <select id="sheetAllcount" resultType="long">
+       select count(1) from worksheet
+        <where>
+            1=1
+            <if test="sheet_no !=null and sheet_no!=''">
+                and  sheet_no  =#{sheet_no}
+            </if>
+            <if test="sheet_mssage !=null and sheet_mssage!=''">
+                AND sheet_mssage like '%${sheet_mssage}%'
+            </if>
+            <if test="sheet_addr !=null and sheet_addr!=''">
+                AND sheet_addr like '%${sheet_addr}%'
+            </if>
+            <if test="sheet_level !=null and sheet_level!=''">
+                AND sheet_level =#{sheet_level}
+            </if>
+            <if test="sheet_customer !=null and sheet_customer!=''">
+                AND sheet_customer like '%${sheet_customer}%'
+            </if>
+            <if test="sheet_starttime !=null and sheet_starttime!=''">
+                AND sheet_starttime =#{sheet_starttime}
+            </if>
+            <if test="sheet_type !=null and sheet_type!=''">
+                AND sheet_type =#{sheet_type}
+            </if>
+            <if test="sheet_operation !=null and sheet_operation!=''">
+                AND sheet_operation =#{sheet_operation}
+            </if>
+            <if test="sheet_subclass !=null and sheet_subclass!=''">
+                AND sheet_subclass =#{sheet_subclass}
+            </if>
+            <if test="sheet_fstime !=null and sheet_fstime!=''">
+                AND sheet_fstime =#{sheet_fstime}
+            </if>
+            <if test="sheet_source !=null and sheet_source!=''">
+                AND sheet_source=#{sheet_source}
+            </if>
+            <if test="sheet_reportname !=null and sheet_reportname!=''">
+                AND sheet_reportname like '%${sheet_reportname}%'
+            </if>
+            <if test="sheet_contactsname !=null and sheet_contactsname!=''">
+                AND sheet_contactsname like '%${sheet_contactsname}%'
+            </if>
+            <if test="sheet_contactsphone !=null and sheet_contactsphone!=''">
+                AND sheet_contactsphone =#{sheet_contactsphone}
+            </if>
+            <if test="sheet_community !=null and sheet_community!=''">
+                AND sheet_community =#{sheet_community}
+            </if>
+            <if test="sheet_addrmssage !=null and sheet_addrmssage!=''">
+                AND sheet_addrmssage like '%${sheet_addrmssage}%'
+            </if>
+            <if test="SHEET_EVENTMSSAGE !=null and SHEET_EVENTMSSAGE!=''">
+                AND SHEET_EVENTMSSAGE like '%${SHEET_EVENTMSSAGE}%'
+            </if>
+            <if test="sheet_eventmssage !=null and sheet_eventmssage!=''">
+                AND sheet_eventmssage like '%${sheet_eventmssage}%'
+            </if>
+            <if test="sheet_inputname !=null and sheet_inputname!=''">
+                AND sheet_inputname =#{sheet_inputname}
+            </if>
+            <if test="sheet_ly !=null and sheet_ly!=''">
+                AND sheet_ly like '%${sheet_ly}%'
+            </if>
+            <if test="sheet_lyno !=null and sheet_lyno!=''">
+                AND sheet_lyno =#{sheet_lyno}
+            </if>
+            <if test="sheet_ids != null and sheet_ids !=''">
+                AND id in (${sheet_ids})
+            </if>
+        </where>
+    </select>
+    <select id="selectAllWorksheetfy" resultType="com.Mssage.SheetMssage">
+        select W.*,C.node_name as dqjd from worksheet W left join
+        (select  B.* from procedurenode B  ,
+        (SELECT T.sheet_id,min(T.node_level)as min FROM procedurenode T WHERE T.node_type not in('1') and T.sheet_id is not null GROUP BY T.sheet_id)
+        A where B.sheet_id=A.sheet_id and B.node_level=A.min)C on W.event_id=C.event_id
+        <where>
+            1=1
+            <if test="sheet_no !=null and sheet_no!=''">
+                and  W.sheet_no  =#{sheet_no}
+            </if>
+            <if test="sheet_mssage !=null and sheet_mssage!=''">
+                AND W.sheet_mssage like '%${sheet_mssage}%'
+            </if>
+            <if test="sheet_addr !=null and sheet_addr!=''">
+                AND W.sheet_addr like '%${sheet_addr}%'
+            </if>
+            <if test="sheet_level !=null and sheet_level!=''">
+                AND W.sheet_level =#{sheet_level}
+            </if>
+            <if test="sheet_customer !=null and sheet_customer!=''">
+                AND W.sheet_customer like '%${sheet_customer}%'
+            </if>
+            <if test="sheet_starttime !=null and sheet_starttime!=''">
+                AND W.sheet_starttime =#{sheet_starttime}
+            </if>
+            <if test="sheet_type !=null and sheet_type!=''">
+                AND W.sheet_type =#{sheet_type}
+            </if>
+            <if test="sheet_operation !=null and sheet_operation!=''">
+                AND W.sheet_operation =#{sheet_operation}
+            </if>
+            <if test="sheet_subclass !=null and sheet_subclass!=''">
+                AND W.sheet_subclass =#{sheet_subclass}
+            </if>
+            <if test="sheet_fstime !=null and sheet_fstime!=''">
+                AND W.sheet_fstime =#{sheet_fstime}
+            </if>
+            <if test="sheet_source !=null and sheet_source!=''">
+                AND W.sheet_source=#{sheet_source}
+            </if>
+            <if test="sheet_reportname !=null and sheet_reportname!=''">
+                AND W.sheet_reportname like '%${sheet_reportname}%'
+            </if>
+            <if test="sheet_contactsname !=null and sheet_contactsname!=''">
+                AND W.sheet_contactsname like '%${sheet_contactsname}%'
+            </if>
+            <if test="sheet_contactsphone !=null and sheet_contactsphone!=''">
+                AND W.sheet_contactsphone =#{sheet_contactsphone}
+            </if>
+            <if test="sheet_community !=null and sheet_community!=''">
+                AND W.sheet_community =#{sheet_community}
+            </if>
+            <if test="sheet_addrmssage !=null and sheet_addrmssage!=''">
+                AND W.sheet_addrmssage like '%${sheet_addrmssage}%'
+            </if>
+            <if test="SHEET_EVENTMSSAGE !=null and SHEET_EVENTMSSAGE!=''">
+                AND W.SHEET_EVENTMSSAGE like '%${SHEET_EVENTMSSAGE}%'
+            </if>
+            <if test="sheet_eventmssage !=null and sheet_eventmssage!=''">
+                AND W.sheet_eventmssage like '%${sheet_eventmssage}%'
+            </if>
+            <if test="sheet_inputname !=null and sheet_inputname!=''">
+                AND W.sheet_inputname =#{sheet_inputname}
+            </if>
+            <if test="sheet_ly !=null and sheet_ly!=''">
+                AND W.sheet_ly like '%${sheet_ly}%'
+            </if>
+            <if test="sheet_lyno !=null and sheet_lyno!=''">
+                AND W.sheet_lyno =#{sheet_lyno}
+            </if>
+            <if test="sheet_ids != null and sheet_ids !=''">
+                AND W.id in (${sheet_ids})
+            </if>
+        </where>
+        limit #{page},#{size}
+    </select>
+    <select id="selectAllWorksheet" resultType="Map">
+        select * from worksheet W
+        <where>
+        1=1
+            <if test="sheet_no !=null and sheet_no!=''">
+               and  W.sheet_no  =#{sheet_no}
+            </if>
+            <if test="sheet_mssage !=null and sheet_mssage!=''">
+                AND W.sheet_mssage like '%${sheet_mssage}%'
+            </if>
+            <if test="sheet_addr !=null and sheet_addr!=''">
+                AND W.sheet_addr like '%${sheet_addr}%'
+            </if>
+            <if test="sheet_level !=null and sheet_level!=''">
+                AND W.sheet_level =#{sheet_level}
+            </if>
+            <if test="sheet_customer !=null and sheet_customer!=''">
+                AND W.sheet_customer like '%${sheet_customer}%'
+            </if>
+            <if test="sheet_starttime !=null and sheet_starttime!=''">
+                AND W.sheet_starttime =#{sheet_starttime}
+            </if>
+            <if test="sheet_type !=null and sheet_type!=''">
+                AND W.sheet_type =#{sheet_type}
+            </if>
+            <if test="sheet_operation !=null and sheet_operation!=''">
+                AND W.sheet_operation =#{sheet_operation}
+            </if>
+            <if test="sheet_subclass !=null and sheet_subclass!=''">
+                AND W.sheet_subclass =#{sheet_subclass}
+            </if>
+            <if test="sheet_fstime !=null and sheet_fstime!=''">
+                AND W.sheet_fstime =#{sheet_fstime}
+            </if>
+            <if test="sheet_source !=null and sheet_source!=''">
+                AND W.sheet_source=#{sheet_source}
+            </if>
+            <if test="sheet_reportname !=null and sheet_reportname!=''">
+                AND W.sheet_reportname like '%${sheet_reportname}%'
+            </if>
+            <if test="sheet_contactsname !=null and sheet_contactsname!=''">
+                AND W.sheet_contactsname like '%${sheet_contactsname}%'
+            </if>
+            <if test="sheet_contactsphone !=null and sheet_contactsphone!=''">
+                AND W.sheet_contactsphone =#{sheet_contactsphone}
+            </if>
+            <if test="sheet_community !=null and sheet_community!=''">
+                AND W.sheet_community =#{sheet_community}
+            </if>
+            <if test="sheet_addrmssage !=null and sheet_addrmssage!=''">
+                AND W.sheet_addrmssage like '%${sheet_addrmssage}%'
+            </if>
+            <if test="SHEET_EVENTMSSAGE !=null and SHEET_EVENTMSSAGE!=''">
+                AND W.SHEET_EVENTMSSAGE like '%${SHEET_EVENTMSSAGE}%'
+            </if>
+            <if test="sheet_eventmssage !=null and sheet_eventmssage!=''">
+                AND W.sheet_eventmssage like '%${sheet_eventmssage}%'
+            </if>
+            <if test="sheet_inputname !=null and sheet_inputname!=''">
+                AND W.sheet_inputname =#{sheet_inputname}
+            </if>
+            <if test="event_id !=null and event_id!=''">
+                AND W.event_id =#{event_id}
+            </if>
+            <if test="sheet_bz !=null and sheet_bz!=''">
+                AND W.sheet_bz =#{sheet_bz}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertDataWorksheet">
+		INSERT INTO worksheet(
+		  <if test="sheet_mssage != null and sheet_mssage !=''">
+              sheet_mssage,
+          </if>
+          <if test="sheet_addr != null and sheet_addr !=''">
+              sheet_addr,
+          </if>
+          <if test="sheet_level != null and sheet_level !=''">
+              sheet_level,
+          </if>
+          <if test="sheet_customer != null and sheet_customer !=''">
+              sheet_customer,
+          </if>
+          <if test="sheet_starttime != null and sheet_starttime !=''">
+              sheet_starttime,
+          </if>
+          <if test="sheet_type != null and sheet_type !=''">
+              sheet_type,
+          </if>
+          <if test="sheet_operation != null and sheet_operation !=''">
+              sheet_operation,
+          </if>
+          <if test="sheet_subclass != null and sheet_subclass !=''">
+              sheet_subclass,
+          </if>
+          <if test="sheet_fstime != null and sheet_fstime !=''">
+              sheet_fstime,
+          </if>
+          <if test="sheet_source != null and sheet_source !=''">
+              sheet_source,
+          </if>
+          <if test="sheet_reportname != null and sheet_reportname !=''">
+              sheet_reportname,
+          </if>
+          <if test="sheet_contactsname != null and sheet_contactsname !=''">
+              sheet_contactsname,
+          </if>
+          <if test="sheet_contactsphone != null and sheet_contactsphone !=''">
+              sheet_contactsphone,
+          </if>
+          <if test="sheet_community != null and sheet_community !=''">
+              sheet_community,
+          </if>
+          <if test="sheet_addrmssage != null and sheet_addrmssage !=''">
+              sheet_addrmssage,
+          </if>
+          <if test="sheet_eventmssage != null and sheet_eventmssage !=''">
+              sheet_eventmssage,
+          </if>
+          <if test="sheet_inputname != null and sheet_inputname !=''">
+              sheet_inputname,
+          </if>
+          <if test="sheet_inputphone != null and sheet_inputphone !=''">
+              sheet_inputphone,
+          </if>
+          <if test="sheet_cltype != null and sheet_cltype !=''">
+              sheet_cltype,
+          </if>
+          <if test="sheet_no != null and sheet_no !=''">
+              sheet_no ,
+          </if>
+        <if test="sheet_bz != null and sheet_bz !=''">
+            sheet_bz ,
+        </if>
+        <if test="sheet_ly != null and sheet_ly !=''">
+            sheet_ly ,
+        </if>
+        <if test="sheet_lyno != null and sheet_lyno !=''">
+            sheet_lyno ,
+        </if>
+        event_id)
+		VALUES
+		  (
+          <if test="sheet_mssage != null and sheet_mssage !=''">
+            #{sheet_mssage},
+          </if>
+          <if test="sheet_addr != null and sheet_addr !=''">
+            #{sheet_addr},
+          </if>
+          <if test="sheet_level != null and sheet_level !=''">
+            #{sheet_level},
+          </if>
+          <if test="sheet_customer != null and sheet_customer !=''">
+            #{sheet_customer},
+          </if>
+          <if test="sheet_starttime != null and sheet_starttime !=''">
+            #{sheet_starttime},
+          </if>
+          <if test="sheet_type != null and sheet_type !=''">
+            #{sheet_type},
+          </if>
+          <if test="sheet_operation != null and sheet_operation !=''">
+            #{sheet_operation},
+          </if>
+          <if test="sheet_subclass != null and sheet_subclass !=''">
+            #{sheet_subclass},
+          </if>
+          <if test="sheet_fstime != null and sheet_fstime !=''">
+            #{sheet_fstime},
+          </if>
+          <if test="sheet_source != null and sheet_source !=''">
+            #{sheet_source},
+          </if>
+          <if test="sheet_reportname != null and sheet_reportname !=''">
+            #{sheet_reportname},
+          </if>
+          <if test="sheet_contactsname != null and sheet_contactsname !=''">
+            #{sheet_contactsname},
+          </if>
+          <if test="sheet_contactsphone != null and sheet_contactsphone !=''">
+            #{sheet_contactsphone},
+          </if>
+          <if test="sheet_community != null and sheet_community !=''">
+            #{sheet_community},
+          </if>
+          <if test="sheet_addrmssage != null and sheet_addrmssage !=''">
+            #{sheet_addrmssage},
+          </if>
+          <if test="sheet_eventmssage != null and sheet_eventmssage !=''">
+            #{sheet_eventmssage},
+          </if>
+          <if test="sheet_inputname != null and sheet_inputname !=''">
+            #{sheet_inputname},
+          </if>
+          <if test="sheet_inputphone != null and sheet_inputphone !=''">
+            #{sheet_inputphone},
+          </if>
+          <if test="sheet_cltype != null and sheet_cltype !=''">
+              #{sheet_cltype},
+          </if>
+          <if test="sheet_no != null and sheet_no !=''">
+              #{sheet_no},
+          </if>
+        <if test="sheet_bz != null and sheet_bz !=''">
+            #{sheet_bz},
+        </if>
+        <if test="sheet_ly != null and sheet_ly !=''">
+            #{sheet_ly} ,
+        </if>
+        <if test="sheet_lyno != null and sheet_lyno !=''">
+            #{sheet_lyno} ,
+        </if>
+       #{event_id})
+	</insert>
+    <delete id="deleteDataWorksheet" parameterType="Map">
+		DELETE FROM worksheet WHERE id = #{id}
+	</delete>
+    <update id="updateEventype" parameterType="Map">
+    UPDATE eventmssage
+    <set>
+        event_cltype='1'
+    </set>
+        <where>
+            id = #{event_id}
+        </where>
+    </update>
+    <update id="updatesheet" parameterType="Map">
+        UPDATE worksheet
+        <set>
+            sheet_cltype=#{sheet_cltype}
+        </set>
+        <where>
+            id = #{sheet_id}
+        </where>
+    </update>
+    <update id="updateDataWorksheet" parameterType="Map">
+        UPDATE worksheet
+        <set>
+            sheet_no = #{sheet_no}
+            <if test="sheet_mssage != null and sheet_mssage !=''">
+                ,sheet_mssage = #{sheet_mssage}
+            </if>
+            <if test="sheet_addr != null and sheet_addr !=''">
+                ,sheet_addr = #{sheet_addr}
+            </if>
+            <if test="sheet_level != null and sheet_level != ''">
+                ,sheet_level = #{sheet_level}
+            </if>
+            <if test="sheet_customer != null and sheet_customer !=''">
+                ,sheet_customer = #{sheet_customer}
+            </if>
+            <if test="sheet_starttime != null and sheet_starttime != ''">
+                ,sheet_starttime = #{sheet_starttime}
+            </if>
+            <if test="sheet_type != null and sheet_type != ''">
+                ,sheet_type = #{sheet_type}
+            </if>
+            <if test="sheet_operation != null and sheet_operation != ''">
+                ,sheet_operation = #{sheet_operation}
+            </if>
+            <if test="sheet_subclass != null and sheet_subclass != ''">
+                ,sheet_subclass = #{sheet_subclass}
+            </if>
+            <if test="sheet_fstime != null and sheet_fstime != ''">
+                ,sheet_fstime = #{sheet_fstime}
+            </if>
+            <if test="sheet_source != null and sheet_source != ''">
+                ,sheet_source = #{sheet_source}
+            </if>
+            <if test="sheet_reportname != null and sheet_reportname != ''">
+                ,sheet_reportname = #{sheet_reportname}
+            </if>
+            <if test="sheet_contactsname != null and sheet_contactsname != ''">
+                ,sheet_contactsname = #{sheet_contactsname}
+            </if>
+            <if test="sheet_contactsphone != null and sheet_contactsphone != ''">
+                ,sheet_contactsphone = #{sheet_contactsphone}
+            </if>
+            <if test="sheet_community != null and sheet_community != ''">
+                ,sheet_community = #{sheet_community}
+            </if>
+            <if test="sheet_addrmssage != null and sheet_addrmssage != ''">
+                ,sheet_addrmssage = #{sheet_addrmssage}
+            </if>
+            <if test="sheet_eventmssage != null and sheet_eventmssage != ''">
+                ,sheet_eventmssage = #{sheet_eventmssage}
+            </if>
+            <if test="sheet_inputname != null and sheet_inputname != ''">
+                ,sheet_inputname = #{sheet_inputname}
+            </if>
+            <if test="sheet_inputphone != null and sheet_inputphone != ''">
+                ,sheet_inputphone = #{sheet_inputphone}
+            </if>
+            <if test="sheet_cltype != null and sheet_cltype != ''">
+                ,sheet_cltype = #{sheet_cltype}
+            </if>
+<!--            <if test="EVENT_ID != null and EVENT_ID != ''">-->
+<!--                ,EVENT_ID = #{EVENT_ID}-->
+<!--            </if>-->
+        </set>
+        <where>
+            event_id = #{event_id}
+        </where>
+    </update>
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Distributemapper">
+    <select id="distinctselectnodeMssage" resultType="Map">
+        SELECT * FROM procedurenode
+        WHERE 1=1
+        <if test="node_depttype != null and node_depttype !=''">
+           AND node_depttype=#{node_depttype}
+        </if>
+        <if test="event_id != null and event_id !=''">
+           AND event_id=#{event_id}
+        </if>
+    </select>
+
+    <select id="selectNode" resultType="Map">
+        SELECT * FROM procedurenode
+        WHERE 1=1
+
+            AND id=#{id}
+
+    </select>
+    <select id="selectallnode" resultType="Map">
+       SELECT COUNT(*) as num from procedurenode where sheet_id=#{sheet_id} and node_depttype='1'and node_type='0'
+    </select>
+    <select id="selectsum" resultType="Map">
+       SELECT a.node_db from
+ (select node_db from procedurenode where sheet_id=#{sheet_id} and node_depttype='0')a
+ union
+SELECT b.lev from
+ (select COUNT(*) as lev  from procedurenode where sheet_id=#{sheet_id} and node_depttype='1')b
+
+    </select>
+
+    <select id="selectNodeMssage" resultType="Map">
+        SELECT * FROM procedurenode
+        WHERE 1=1
+
+            AND sheet_id=#{sheet_id}
+
+    </select>
+
+    <select id="selectnodeMssagedate" resultType="Map">
+        SELECT * FROM procedurenode
+        WHERE 1=1
+        <if test="node_depttype != null and node_depttype !=''">
+            AND node_depttype=#{node_depttype}
+        </if>
+        <if test="node_nameno != null and node_nameno !=''">
+            AND node_nameno=#{node_nameno}
+        </if>
+        <if test="event_id != null and event_id !=''">
+            AND event_id=#{event_id}
+        </if>
+        <if test="id != null and id !=''">
+            AND id=#{id}
+        </if>
+    </select>
+    <select id="distinctselectMaxLevel" resultType="Map">
+        SELECT (max(t.node_level)+1)as maxlevel
+      FROM procedurenode  t
+        WHERE 1=1
+        <if test="event_id != null and event_id !=''">
+            AND event_id=#{event_id}
+        </if>
+    </select>
+    <insert id="insertNode">
+		insert into procedurenode(
+		  <if test="node_level != null and node_level !=''">
+              node_level,
+          </if>
+          <if test="node_name != null and node_name !=''">
+              node_name,
+          </if>
+          <if test="node_type != null and node_type !=''">
+              node_type,
+          </if>
+          <if test="node_endtime != null and node_endtime !=''">
+              node_endtime,
+          </if>
+          <if test="sheet_id != null and sheet_id !=''">
+              sheet_id,
+          </if>
+          <if test="node_depttype != null and node_depttype !=''">
+              node_depttype,
+          </if>
+          <if test="node_mssage != null and node_mssage !=''">
+              node_mssage,
+          </if>
+        <if test="node_nameno != null and node_nameno !=''">
+            node_nameno,
+        </if>
+        event_id)
+		VALUES
+		  (
+          <if test="node_level != null and node_level !=''">
+            #{node_level},
+          </if>
+          <if test="node_name != null and node_name !=''">
+            #{node_name},
+          </if>
+          <if test="node_type != null and node_type !=''">
+            #{node_type},
+          </if>
+          <if test="node_endtime != null and node_endtime !=''">
+            #{node_endtime},
+          </if>
+          <if test="sheet_id != null and sheet_id !=''">
+            #{sheet_id},
+          </if>
+          <if test="node_depttype != null and node_depttype !=''">
+              #{node_depttype},
+          </if>
+          <if test="node_mssage != null and node_mssage !=''">
+              #{node_mssage},
+          </if>
+        <if test="node_nameno != null and node_nameno !=''">
+            #{node_nameno},
+        </if>
+            #{event_id})
+	</insert>
+
+
+
+    <delete id="deleteNode" parameterType="Map">
+		DELETE FROM procedurenode
+		WHERE
+        event_id= #{event_id}
+        <if test="node_depttype == '0'.toString()">
+            AND node_depttype=#{node_depttype}
+        </if>
+        <if test="node_depttype == '1'.toString()">
+            AND node_level=(SELECT A from(SELECT MAX(node_level)as A FROM procedurenode where event_id=#{event_id})a)
+        </if>
+
+	</delete>
+    <delete id="deleteALLNode" parameterType="Map">
+        DELETE FROM procedurenode
+        WHERE
+        event_id= #{event_id}
+    </delete>
+    <update id="fallBackDistribute" parameterType="Map">
+    UPDATE procedurenode
+     <set>
+         node_type= #{node_type}
+     </set>
+        <where>
+            event_id = #{event_id}
+            <if test="node_depttype == '0'.toString()">
+                AND node_depttype=#{node_depttype}
+            </if>
+            <if test="node_depttype == '1'.toString() ">
+                AND node_level=(SELECT A from(SELECT MAX(node_level)as A FROM procedurenode where event_id=#{event_id})a)
+            </if>
+        </where>
+    </update>
+
+    <update id="spupdatenode" parameterType="Map">
+        UPDATE procedurenode
+        <set>
+            node_type= #{node_type}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <update id="updatejd" parameterType="Map">
+        UPDATE procedurenode
+        <set>
+            node_type= #{node_uptype}
+        </set>
+        <where>
+            sheet_id=#{sheet_id} and node_depttype='1' and node_level=(select a.a from (SELECT max(t.node_level)as a FROM procedurenode t where  t.sheet_id=#{sheet_id} and node_type='1')a)
+        </where>
+    </update>
+    <update id="updatedb" parameterType="Map">
+        UPDATE procedurenode
+        <set>
+            node_db=(CAST(node_db AS SIGNED)-1)
+--             (select b.a from (select (CAST(t.node_db AS SIGNED)-1) as a   from procedurenode t where  t.sheet_id=#{sheet_id} and t.node_depttype='0')b)
+        </set>
+        <where>
+            sheet_id=#{sheet_id} and node_depttype='0'
+        </where>
+    </update>
+    <update id="updatejdadd" parameterType="Map">
+        UPDATE procedurenode
+        <set>
+            node_db=(CAST(node_db AS SIGNED)+1)
+             </set>
+        <where>
+            sheet_id=#{sheet_id} and node_depttype='0'
+        </where>
+    </update>
+    <update id="updateNode" parameterType="Map">
+    UPDATE procedurenode
+    <set>
+        event_id = #{event_id}
+        <if test="node_level != null and node_level !=''">
+            ,node_level = #{node_level}
+        </if>
+        <if test="node_name != null and node_name !=''">
+            ,node_name = #{node_name}
+        </if>
+        <if test="node_nameno != null and node_nameno !=''">
+            ,node_nameno = #{node_nameno}
+        </if>
+        <if test="node_type != null and node_type != ''">
+            ,node_type = #{node_type}
+        </if>
+        <if test="node_endtime != null and node_endtime !=''">
+            ,node_endtime = #{node_endtime}
+        </if>
+        <if test="node_depttype != null and node_depttype != ''">
+            ,node_depttype = #{node_depttype}
+        </if>
+        <if test="node_mssage != null and node_mssage != ''">
+            ,node_mssage = #{node_mssage}
+        </if>
+    </set>
+    <where>
+        event_id = #{event_id}
+        <if test="node_depttype == '1'.toString() and node_depttype != ''">
+            AND node_level = #{node_level}
+        </if>
+        <if test="node_depttype == '0'.toString() and node_depttype != ''">
+            AND node_depttype = #{node_depttype}
+        </if>
+    </where>
+    </update>
+    <update id="upsheeettypedb" parameterType="Map">
+        UPDATE procedurenode
+        <set>
+            node_type = '1'
+        </set>
+        <where>
+            sheet_id = #{sheet_id}
+        </where>
+    </update>
+
+    <update id="upsheeettype" parameterType="Map">
+        UPDATE worksheet
+        <set>
+            sheet_cltype = '2'
+        </set>
+        <where>
+            id = #{sheet_id}
+        </where>
+    </update>
+    <update id="updateNodeone" parameterType="Map">
+        UPDATE procedurenode
+        <set>
+            sheet_id = #{sheet_id}
+        </set>
+        <where>
+            event_id = #{event_id}
+        </where>
+    </update>
+</mapper>

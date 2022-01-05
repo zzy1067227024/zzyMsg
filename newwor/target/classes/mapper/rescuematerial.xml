@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Rescuematerialmapper">
+    <select id="selectAllrescuematerial" resultType="Map">
+        select * from rescuematerial R
+        <where>
+        1=1
+            <if test="MATERIAL_NAME !=null and MATERIAL_NAME!=''">
+                 R.MATERIAL_NAME like '%${MATERIAL_NAME}%'
+            </if>
+            <if test="MATERIAL_DEPT !=null and MATERIAL_DEPT!=''">
+                AND R.MATERIAL_DEPT =#{MATERIAL_DEPT}
+            </if>
+            <if test="MATERIAL_CONTACTS !=null and MATERIAL_CONTACTS!=''">
+                AND R.MATERIAL_CONTACTS like '%${MATERIAL_CONTACTS}%'
+            </if>
+            <if test="MATERIAL_TYPE !=null and MATERIAL_TYPE!=''">
+                AND R.MATERIAL_TYPE =#{MATERIAL_TYPE}
+            </if>
+            <if test="MATERIAL_SUM !=null and MATERIAL_SUM!=''">
+                AND R.MATERIAL_SUM =#{MATERIAL_SUM}
+            </if>
+            <if test="MATERIAL_SITE !=null and MATERIAL_SITE!=''">
+                AND R.MATERIAL_SITE =#{MATERIAL_SITE}
+            </if>
+            <if test="MATERIAL_STARTTIME !=null and MATERIAL_STARTTIME!=''">
+                AND R.MATERIAL_STARTTIME =#{MATERIAL_STARTTIME}
+            </if>
+            <if test="MATERIAL_VALIDTIME !=null and MATERIAL_VALIDTIME!=''">
+                AND R.MATERIAL_VALIDTIME =#{MATERIAL_VALIDTIME}
+            </if>
+            <if test="MATERIAL_ADDR !=null and MATERIAL_ADDR!=''">
+                AND R.MATERIAL_ADDR =#{MATERIAL_ADDR}
+            </if>
+            <if test="MATERIAL_PICTUREURL !=null and MATERIAL_PICTUREURL!=''">
+                AND R.MATERIAL_PICTUREURL =#{MATERIAL_PICTUREURL}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertDataRescuematerial">
+		INSERT INTO RESCUEMATERIAL(
+		  <if test="MATERIAL_DEPT != null and MATERIAL_DEPT !=''">
+              MATERIAL_DEPT,
+          </if>
+          <if test="MATERIAL_CONTACTS != null and MATERIAL_CONTACTS !=''">
+              MATERIAL_CONTACTS,
+          </if>
+          <if test="MATERIAL_TYPE != null and MATERIAL_TYPE !=''">
+              MATERIAL_TYPE,
+          </if>
+          <if test="MATERIAL_SUM != null and MATERIAL_SUM !=''">
+              MATERIAL_SUM,
+          </if>
+          <if test="MATERIAL_SITE != null and MATERIAL_SITE !=''">
+              MATERIAL_SITE,
+          </if>
+          <if test="MATERIAL_STARTTIME != null and MATERIAL_STARTTIME !=''">
+              MATERIAL_STARTTIME,
+          </if>
+          <if test="MATERIAL_VALIDTIME != null and MATERIAL_VALIDTIME !=''">
+              MATERIAL_VALIDTIME,
+          </if>
+          <if test="MATERIAL_ADDR != null and MATERIAL_ADDR !=''">
+              MATERIAL_ADDR,
+          </if>
+          <if test="MATERIAL_PICTUREURL != null and MATERIAL_PICTUREURL !=''">
+              MATERIAL_PICTUREURL,
+          </if>
+            MATERIAL_NAME)
+		VALUES
+		  (
+          <if test="MATERIAL_DEPT != null and MATERIAL_DEPT !=''">
+            #{MATERIAL_DEPT},
+          </if>
+          <if test="MATERIAL_CONTACTS != null and MATERIAL_CONTACTS !=''">
+            #{MATERIAL_CONTACTS},
+          </if>
+          <if test="MATERIAL_TYPE != null and MATERIAL_TYPE !=''">
+            #{MATERIAL_TYPE},
+          </if>
+          <if test="MATERIAL_SUM != null and MATERIAL_SUM !=''">
+            #{MATERIAL_SUM},
+          </if>
+          <if test="MATERIAL_SITE != null and MATERIAL_SITE !=''">
+            #{MATERIAL_SITE},
+          </if>
+          <if test="MATERIAL_STARTTIME != null and MATERIAL_STARTTIME !=''">
+            #{MATERIAL_STARTTIME},
+          </if>
+          <if test="MATERIAL_VALIDTIME != null and MATERIAL_VALIDTIME !=''">
+            #{MATERIAL_VALIDTIME},
+          </if>
+          <if test="MATERIAL_ADDR != null and MATERIAL_ADDR !=''">
+            #{MATERIAL_ADDR},
+          </if>
+          <if test="MATERIAL_PICTUREURL != null and MATERIAL_PICTUREURL !=''">
+            #{MATERIAL_PICTUREURL},
+          </if>
+            #{MATERIAL_NAME})
+	</insert>
+    <delete id="deleteDataRescuematerial" parameterType="Map">
+		DELETE FROM RESCUEMATERIAL WHERE id = #{ID}
+	</delete>
+
+    <update id="updateDataRescuematerial" parameterType="Map">
+        UPDATE RESCUEMATERIAL
+        <set>
+            MATERIAL_NAME = #{MATERIAL_NAME}
+            <if test="MATERIAL_DEPT != null and MATERIAL_DEPT !=''">
+                ,MATERIAL_DEPT = #{MATERIAL_DEPT}
+            </if>
+            <if test="MATERIAL_CONTACTS != null and MATERIAL_CONTACTS !=''">
+                ,MATERIAL_CONTACTS = #{MATERIAL_CONTACTS}
+            </if>
+            <if test="MATERIAL_TYPE != null and MATERIAL_TYPE != ''">
+                ,MATERIAL_TYPE = #{MATERIAL_TYPE}
+            </if>
+            <if test="MATERIAL_SUM != null and MATERIAL_SUM !=''">
+                ,MATERIAL_SUM = #{MATERIAL_SUM}
+            </if>
+            <if test="MATERIAL_SITE != null and MATERIAL_SITE != ''">
+                ,MATERIAL_SITE = #{MATERIAL_SITE}
+            </if>
+            <if test="MATERIAL_STARTTIME != null and MATERIAL_STARTTIME != ''">
+                ,MATERIAL_STARTTIME = #{MATERIAL_STARTTIME}
+            </if>
+            <if test="MATERIAL_VALIDTIME != null and MATERIAL_VALIDTIME != ''">
+                ,MATERIAL_VALIDTIME = #{MATERIAL_VALIDTIME}
+            </if>
+            <if test="MATERIAL_ADDR != null and MATERIAL_ADDR != ''">
+                ,MATERIAL_ADDR = #{MATERIAL_ADDR}
+            </if>
+            <if test="MATERIAL_PICTUREURL != null and MATERIAL_PICTUREURL != ''">
+                ,MATERIAL_PICTUREURL = #{MATERIAL_PICTUREURL}
+            </if>
+        </set>
+        <where>
+            id = #{ID}
+        </where>
+    </update>
+</mapper>

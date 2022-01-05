@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Planmapper">
+    <select id="Allcount" resultType="long">
+	select count(1) from plan
+</select>
+    <select id="selectAllPlan" resultType="com.Mssage.PlanMssage">
+        select * from plan P
+        <where>
+         1=1
+
+            <if test="plan_name !=null and plan_name!=''">
+                AND P.plan_name like '%${plan_name}%'
+            </if>
+            <if test="PLAN_DEPT !=null and PLAN_DEPT!=''">
+                AND P.PLAN_DEPT =#{PLAN_DEPT}
+            </if>
+            <if test="PLAN_FOUNDER !=null and PLAN_FOUNDER!=''">
+                AND P.PLAN_FOUNDER like '%${PLAN_FOUNDER}%'
+            </if>
+            <if test="PLAN_FOUNDTYPE !=null and PLAN_FOUNDTYPE!=''">
+                AND P.PLAN_FOUNDTYPE =#{PLAN_FOUNDTYPE}
+            </if>
+            <if test="PLAN_INSPECTTYPE !=null and PLAN_INSPECTTYPE!=''">
+                AND P.PLAN_INSPECTTYPE =#{PLAN_INSPECTTYPE}
+            </if>
+            <if test="PLAN_TYPE !=null and PLAN_TYPE!=''">
+                AND P.PLAN_TYPE =#{PLAN_TYPE}
+            </if>
+        </where>
+        limit #{page},#{size}
+    </select>
+
+    <insert id="insertDataPlan">
+		INSERT INTO PLAN(
+		  <if test="PLAN_DEPT != null and PLAN_DEPT !=''">
+              PLAN_DEPT,
+          </if>
+          <if test="PLAN_FOUNDER != null and PLAN_FOUNDER !=''">
+              PLAN_FOUNDER,
+          </if>
+          <if test="PLAN_FOUNDTYPE != null and PLAN_FOUNDTYPE !=''">
+              PLAN_FOUNDTYPE,
+          </if>
+          <if test="PLAN_FOUNDTIME != null and PLAN_FOUNDTIME !=''">
+              PLAN_FOUNDTIME,
+          </if>
+          <if test="PLAN_INSPECTTYPE != null and PLAN_INSPECTTYPE !=''">
+            PLAN_INSPECTTYPE,
+          </if>
+          <if test="PLAN_INSPECTMSSAGE != null and PLAN_INSPECTMSSAGE !=''">
+            PLAN_INSPECTMSSAGE,
+          </if>
+          <if test="PLAN_TYPE != null and PLAN_TYPE !=''">
+            PLAN_TYPE,
+          </if>
+          PLAN_NAME)
+		VALUES
+		  (
+          <if test="PLAN_DEPT != null and PLAN_DEPT !=''">
+            #{PLAN_DEPT},
+          </if>
+          <if test="PLAN_FOUNDER != null and PLAN_FOUNDER !=''">
+            #{PLAN_FOUNDER},
+          </if>
+          <if test="PLAN_FOUNDTYPE != null and PLAN_FOUNDTYPE !=''">
+            #{PLAN_FOUNDTYPE},
+          </if>
+          <if test="PLAN_FOUNDTIME != null and PLAN_FOUNDTIME !=''">
+            #{PLAN_FOUNDTIME},
+          </if>
+          <if test="PLAN_INSPECTTYPE != null and PLAN_INSPECTTYPE !=''">
+            #{PLAN_INSPECTTYPE},
+          </if>
+          <if test="PLAN_INSPECTMSSAGE != null and PLAN_INSPECTMSSAGE !=''">
+            #{PLAN_INSPECTMSSAGE},
+          </if>
+          <if test="PLAN_TYPE != null and PLAN_TYPE !=''">
+            #{PLAN_TYPE},
+          </if>
+            #{PLAN_NAME})
+	</insert>
+    <delete id="deleteDataPlan" parameterType="Map">
+		DELETE FROM PLAN WHERE id = #{ID}
+	</delete>
+
+    <update id="updateDataPlan" parameterType="Map">
+        UPDATE PLAN
+        <set>
+            PLAN_DEPT =#{PLAN_DEPT}
+            <if test="PLAN_FOUNDER != null and PLAN_FOUNDER !=''">
+                ,PLAN_FOUNDER = #{PLAN_FOUNDER}
+            </if>
+            <if test="PLAN_FOUNDTYPE != null and PLAN_FOUNDTYPE !=''">
+                ,PLAN_FOUNDTYPE = #{PLAN_FOUNDTYPE}
+            </if>
+            <if test="PLAN_FOUNDTIME != null and PLAN_FOUNDTIME != ''">
+                ,PLAN_FOUNDTIME = #{PLAN_FOUNDTIME}
+            </if>
+            <if test="PLAN_INSPECTTYPE != null and PLAN_INSPECTTYPE !=''">
+                ,PLAN_INSPECTTYPE = #{PLAN_INSPECTTYPE}
+            </if>
+            <if test="PLAN_INSPECTMSSAGE != null and PLAN_INSPECTMSSAGE != ''">
+                ,PLAN_INSPECTMSSAGE = #{PLAN_INSPECTMSSAGE}
+            </if>
+            <if test="PLAN_TYPE != null and PLAN_TYPE != ''">
+                ,PLAN_TYPE = #{PLAN_TYPE}
+            </if>
+            <if test="PLAN_NAME != null and PLAN_NAME != ''">
+                ,PLAN_NAME = #{PLAN_NAME}
+            </if>
+        </set>
+        <where>
+            id = #{ID}
+        </where>
+    </update>
+</mapper>

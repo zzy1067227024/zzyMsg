@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.TypeMssagemapper">
+    <select id="selectAllTypeMssage" resultType="Map">
+        select * from typemssage T
+        <where>
+          1=1
+        </where>
+    </select>
+    <select id="selectAllTypeMssageone" resultType="Map">
+        select * from typemssage  where type_twono is null
+    </select>
+    <select id="selectAllTypeMssagetwo" resultType="Map">
+        select * from typemssage  where type_threeno is null and type_oneno=#{type_oneno}
+    </select>
+    <select id="selectAllTypeMssagethree" resultType="Map">
+        select * from typemssage  where type_threeno is not null and type_twono=#{type_twono}
+    </select>
+    <select id="selectAllFtypeMssage" resultType="Map">
+        select * from ftypemssage FT
+        <where>
+            1=1
+        </where>
+    </select>
+    <select id="selectAllFtypeMssageone" resultType="Map">
+    select * from ftypemssage where ftype_twono is null
+    </select>
+    <select id="selectAllFtypeMssagetwo" resultType="Map">
+    select * from ftypemssage where ftype_threeno is null and ftype_twono is not null and ftype_oneno=#{ftype_oneno}
+    </select>
+    <select id="selectAllFtypeMssagethree" resultType="Map">
+    select * from ftypemssage where ftype_fourno is null and ftype_threeno is not null and ftype_twono=#{ftype_twono}
+    </select>
+    <select id="selectAllFtypeMssagefour" resultType="Map">
+    select * from ftypemssage where ftype_fiveno is null and ftype_fourno is not null and ftype_threeno=#{ftype_threeno}
+    </select>
+    <select id="selectAllFtypeMssagefive" resultType="Map">
+    select * from ftypemssage where ftype_fiveno is not null  and ftype_fourno=#{ftype_fourno}
+    </select>
+</mapper>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Rescueteammapper">
+    <select id="selectAllRescueteam" resultType="Map">
+        select * from rescueteam R
+        <where>
+        1=1
+            <if test="TEAM_NAME !=null and TEAM_NAME!=''">
+                R.TEAM_NAME like '%${TEAM_NAME}%'
+            </if>
+            <if test="TEAM_LEADERNAME !=null and TEAM_LEADERNAME!=''">
+                AND R.TEAM_LEADERNAME like '%${TEAM_LEADERNAME}%'
+            </if>
+            <if test="TEAM_LEADERPHONE !=null and TEAM_LEADERPHONE!=''">
+                AND R.TEAM_LEADERPHONE =#{TEAM_LEADERPHONE}
+            </if>
+            <if test="TEAM_DEPT !=null and TEAM_DEPT!=''">
+                AND R.TEAM_DEPT =#{TEAM_DEPT}
+            </if>
+            <if test="TEAM_ADDR !=null and TEAM_ADDR!=''">
+                AND R.TEAM_ADDR like '%${TEAM_ADDR}%'
+            </if>
+            <if test="TEAM_SUM !=null and TEAM_SUM!=''">
+                AND R.TEAM_SUM =#{TEAM_SUM}
+            </if>
+            <if test="TEAM_TWOLADERNAME !=null and TEAM_TWOLADERNAME!=''">
+                AND R.TEAM_TWOLADERNAME like '%${TEAM_TWOLADERNAME}%'
+            </if>
+            <if test="TEAM_TWOLADERPHONE !=null and TEAM_TWOLADERPHONE!=''">
+                AND R.TEAM_TWOLADERPHONE #{TEAM_TWOLADERPHONE}
+            </if>
+            <if test="TEAM_MATERIAL !=null and TEAM_MATERIAL!=''">
+                AND R.TEAM_MATERIAL =#{TEAM_MATERIAL}
+            </if>
+            <if test="TEAM_TYPE !=null and TEAM_TYPE!=''">
+                AND R.TEAM_TYPE =#{TEAM_TYPE}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertDataRescueteam">
+		INSERT INTO RESCUETEAM(
+		  <if test="TEAM_LEADERNAME != null and TEAM_LEADERNAME !=''">
+              TEAM_LEADERNAME,
+          </if>
+          <if test="TEAM_LEADERPHONE != null and TEAM_LEADERPHONE !=''">
+              TEAM_LEADERPHONE,
+          </if>
+          <if test="TEAM_DEPT != null and TEAM_DEPT !=''">
+              TEAM_DEPT,
+          </if>
+          <if test="TEAM_ADDR != null and TEAM_ADDR !=''">
+              TEAM_ADDR,
+          </if>
+          <if test="TEAM_SUM != null and TEAM_SUM !=''">
+              TEAM_SUM,
+          </if>
+          <if test="TEAM_TWOLADERNAME != null and TEAM_TWOLADERNAME !=''">
+              TEAM_TWOLADERNAME,
+          </if>
+          <if test="TEAM_TWOLADERPHONE != null and TEAM_TWOLADERPHONE !=''">
+              TEAM_TWOLADERPHONE,
+          </if>
+          <if test="TEAM_MATERIAL != null and TEAM_MATERIAL !=''">
+              TEAM_MATERIAL,
+          </if>
+          <if test="TEAM_TYPE != null and TEAM_TYPE !=''">
+              TEAM_TYPE,
+          </if>
+        TEAM_NAME)
+		VALUES
+		  (
+          <if test="TEAM_LEADERNAME != null and TEAM_LEADERNAME !=''">
+            #{TEAM_LEADERNAME},
+          </if>
+          <if test="TEAM_LEADERPHONE != null and TEAM_LEADERPHONE !=''">
+            #{TEAM_LEADERPHONE},
+          </if>
+          <if test="TEAM_DEPT != null and TEAM_DEPT !=''">
+            #{TEAM_DEPT},
+          </if>
+          <if test="TEAM_ADDR != null and TEAM_ADDR !=''">
+            #{TEAM_ADDR},
+          </if>
+          <if test="TEAM_SUM != null and TEAM_SUM !=''">
+            #{TEAM_SUM},
+          </if>
+          <if test="TEAM_TWOLADERNAME != null and TEAM_TWOLADERNAME !=''">
+            #{TEAM_TWOLADERNAME},
+          </if>
+          <if test="TEAM_TWOLADERPHONE != null and TEAM_TWOLADERPHONE !=''">
+            #{TEAM_TWOLADERPHONE},
+          </if>
+          <if test="TEAM_MATERIAL != null and TEAM_MATERIAL !=''">
+            #{TEAM_MATERIAL},
+          </if>
+          <if test="TEAM_TYPE != null and TEAM_TYPE !=''">
+            #{TEAM_TYPE},
+          </if>
+            #{TEAM_NAME})
+	</insert>
+    <delete id="deleteDataRescueteam" parameterType="Map">
+		DELETE FROM RESCUETEAM WHERE id = #{ID}
+	</delete>
+
+    <update id="updateDataRescueteam" parameterType="Map">
+        UPDATE RESCUETEAM
+        <set>
+            TEAM_NAME = #{TEAM_NAME}
+            <if test="TEAM_LEADERNAME != null and TEAM_LEADERNAME !=''">
+                ,TEAM_LEADERNAME = #{TEAM_LEADERNAME}
+            </if>
+            <if test="TEAM_LEADERPHONE != null and TEAM_LEADERPHONE !=''">
+                ,TEAM_LEADERPHONE = #{TEAM_LEADERPHONE}
+            </if>
+            <if test="TEAM_DEPT != null and TEAM_DEPT != ''">
+                ,TEAM_DEPT = #{TEAM_DEPT}
+            </if>
+            <if test="TEAM_ADDR != null and TEAM_ADDR !=''">
+                ,TEAM_ADDR = #{TEAM_ADDR}
+            </if>
+            <if test="TEAM_SUM != null and TEAM_SUM != ''">
+                ,TEAM_SUM = #{TEAM_SUM}
+            </if>
+            <if test="TEAM_TWOLADERNAME != null and TEAM_TWOLADERNAME != ''">
+                ,TEAM_TWOLADERNAME = #{TEAM_TWOLADERNAME}
+            </if>
+            <if test="TEAM_TWOLADERPHONE != null and TEAM_TWOLADERPHONE != ''">
+                ,TEAM_TWOLADERPHONE = #{TEAM_TWOLADERPHONE}
+            </if>
+            <if test="TEAM_MATERIAL != null and TEAM_MATERIAL != ''">
+                ,TEAM_MATERIAL = #{TEAM_MATERIAL}
+            </if>
+            <if test="TEAM_TYPE != null and TEAM_TYPE != ''">
+                ,TEAM_TYPE = #{TEAM_TYPE}
+            </if>
+        </set>
+        <where>
+            id = #{ID}
+        </where>
+    </update>
+</mapper>

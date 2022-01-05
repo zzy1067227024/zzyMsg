@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.EventMssagemapper">
+    <select id="selectDateMssage" resultType="Map">
+       select * from datemssage where ms_zl=#{ms_zl}
+    </select>
+    <select id="selectEventMssage" resultType="Map">
+       select * from eventmssage where id=#{event_id}
+    </select>
+    <select id="eventAllcount" resultType="long">
+	select count(1) from eventmssage
+        <where>
+            1=1
+            <if test="event_lxno != null and event_lxno !=''">
+                and event_lxno = #{event_lxno}
+            </if>
+            <if test="event_level != null and event_level !=''">
+                and event_level = #{event_level}
+            </if>
+            <if test="event_sourcetype != null and event_sourcetype !=''">
+                and event_sourcetype = #{event_sourcetype}
+            </if>
+            <if test="event_lx != null and event_lx != ''">
+                and event_lx = #{event_lx}
+            </if>
+            <if test="event_name != null and event_name !=''">
+                and event_name = #{event_name}
+            </if>
+            <if test="event_reason != null and event_reason != ''">
+                and event_reason = #{event_reason}
+            </if>
+            <if test="event_describe != null and event_describe != ''">
+                and event_describe = #{event_describe}
+            </if>
+            <if test="event_addr != null and event_addr != ''">
+                and event_addr = #{event_addr}
+            </if>
+            <if test="event_longitude != null and event_longitude != ''">
+                and event_longitude = #{event_longitude}
+            </if>
+            <if test="event_latitude != null and event_latitude != ''">
+                and event_latitude = #{event_latitude}
+            </if>
+            <if test="event_happentime != null and event_happentime != ''">
+                and event_happentime = #{event_happentime}
+            </if>
+            <if test="event_receivetime != null and event_receivetime != ''">
+                and event_receivetime = #{event_receivetime}
+            </if>
+            <if test="event_sendtime != null and event_sendtime != ''">
+                and event_sendtime = #{event_sendtime}
+            </if>
+            <if test="event_fillname != null and event_fillname != ''">
+                and event_fillname = #{event_fillname}
+            </if>
+            <if test="event_fillphone != null and event_fillphone != ''">
+                and event_fillphone = #{event_fillphone}
+            </if>
+            <if test="event_filldept != null and event_filldept != ''">
+                and event_filldept = #{event_filldept}
+            </if>
+            <if test="event_phonestarttime != null and event_phonestarttime != ''">
+                and event_phonestarttime = #{event_phonestarttime}
+            </if>
+            <if test="event_phoneendtime != null and event_phoneendtime != ''">
+                and event_phoneendtime = #{event_phoneendtime}
+            </if>
+            <if test="event_reportname != null and event_reportname != ''">
+                and event_reportname = #{event_reportname}
+            </if>
+            <if test="event_reportphone != null and event_reportphone != ''">
+                and event_reportphone = #{event_reportphone}
+            </if>
+            <if test="event_reportpolitics != null and event_reportpolitics != ''">
+                and event_reportpolitics = #{event_reportpolitics}
+            </if>
+            <if test="event_answername != null and event_answername != ''">
+                and event_answername = #{event_answername}
+            </if>
+            <if test="event_mssagetype != null and event_mssagetype != ''">
+                and event_mssagetype = #{event_mssagetype}
+            </if>
+            <if test="event_cltype != null and event_cltype != ''">
+                and event_cltype = #{event_cltype}
+            </if>
+            <if test=" event_responsibilitydept != null and  event_responsibilitydept !=''">
+                and event_responsibilitydept=#{event_responsibilitydept}
+            </if>
+            <if test=" event_handlemssage != null and  event_handlemssage !=''">
+                and event_handlemssage=#{event_handlemssage}
+            </if>
+            <if test=" event_resultmssage != null and  event_resultmssage !=''">
+                and event_resultmssage=#{event_resultmssage}
+            </if>
+            <if test=" event_callmssage != null and  event_callmssage !=''">
+                and event_callmssage=#{event_callmssage}
+            </if>
+            <if test=" event_resulttime != null and  event_resulttime !=''">
+                and event_resulttime=#{event_resulttime}
+            </if>
+            <if test=" event_sourceno != null and  event_sourceno !=''">
+                and event_sourceno=#{event_sourceno}
+            </if>
+            <if test=" event_levelno != null and  event_levelno !=''">
+                and event_levelno=#{event_levelno}
+            </if>
+            <if test=" event_sourcetypeno != null and  event_sourcetypeno !=''">
+                and event_sourcetypeno=#{event_sourcetypeno}
+            </if>
+            <if test=" event_cjtime != null and  event_cjtime !=''">
+                and event_cjtime=#{event_cjtime}
+            </if>
+            <if test=" event_ywno != null and  event_ywno !=''">
+                and event_ywno=#{event_ywno}
+            </if>
+            <if test=" event_xzno != null and  event_xzno !=''">
+                and event_xzno=#{event_xzno}
+            </if>
+        </where>
+</select>
+    <select id="selectAllEventMssage" resultType="com.Mssage.EventMssage">
+        select * from eventmssage
+        <where>
+          1=1
+            <if test="event_lxno != null and event_lxno !=''">
+                and event_lxno = #{event_lxno}
+            </if>
+            <if test="event_level != null and event_level !=''">
+                and event_level = #{event_level}
+            </if>
+            <if test="event_sourcetype != null and event_sourcetype !=''">
+                and event_sourcetype = #{event_sourcetype}
+            </if>
+            <if test="event_lx != null and event_lx != ''">
+                and event_lx = #{event_lx}
+            </if>
+            <if test="event_name != null and event_name !=''">
+                and event_name = #{event_name}
+            </if>
+            <if test="event_reason != null and event_reason != ''">
+                and event_reason = #{event_reason}
+            </if>
+            <if test="event_describe != null and event_describe != ''">
+                and event_describe = #{event_describe}
+            </if>
+            <if test="event_addr != null and event_addr != ''">
+                and event_addr = #{event_addr}
+            </if>
+            <if test="event_longitude != null and event_longitude != ''">
+                and event_longitude = #{event_longitude}
+            </if>
+            <if test="event_latitude != null and event_latitude != ''">
+                and event_latitude = #{event_latitude}
+            </if>
+            <if test="event_happentime != null and event_happentime != ''">
+                and event_happentime = #{event_happentime}
+            </if>
+            <if test="event_receivetime != null and event_receivetime != ''">
+                and event_receivetime = #{event_receivetime}
+            </if>
+            <if test="event_sendtime != null and event_sendtime != ''">
+                and event_sendtime = #{event_sendtime}
+            </if>
+            <if test="event_fillname != null and event_fillname != ''">
+                and event_fillname = #{event_fillname}
+            </if>
+            <if test="event_fillphone != null and event_fillphone != ''">
+                and event_fillphone = #{event_fillphone}
+            </if>
+            <if test="event_filldept != null and event_filldept != ''">
+                and event_filldept = #{event_filldept}
+            </if>
+            <if test="event_phonestarttime != null and event_phonestarttime != ''">
+                and event_phonestarttime = #{event_phonestarttime}
+            </if>
+            <if test="event_phoneendtime != null and event_phoneendtime != ''">
+                and event_phoneendtime = #{event_phoneendtime}
+            </if>
+            <if test="event_reportname != null and event_reportname != ''">
+                and event_reportname = #{event_reportname}
+            </if>
+            <if test="event_reportphone != null and event_reportphone != ''">
+                and event_reportphone = #{event_reportphone}
+            </if>
+            <if test="event_reportpolitics != null and event_reportpolitics != ''">
+                and event_reportpolitics = #{event_reportpolitics}
+            </if>
+            <if test="event_answername != null and event_answername != ''">
+                and event_answername = #{event_answername}
+            </if>
+            <if test="event_mssagetype != null and event_mssagetype != ''">
+                and event_mssagetype = #{event_mssagetype}
+            </if>
+            <if test="event_cltype != null and event_cltype != ''">
+                and event_cltype = #{event_cltype}
+            </if>
+            <if test=" event_responsibilitydept != null and  event_responsibilitydept !=''">
+                and event_responsibilitydept=#{event_responsibilitydept}
+            </if>
+            <if test=" event_handlemssage != null and  event_handlemssage !=''">
+                and event_handlemssage=#{event_handlemssage}
+            </if>
+            <if test=" event_resultmssage != null and  event_resultmssage !=''">
+                and event_resultmssage=#{event_resultmssage}
+            </if>
+            <if test=" event_callmssage != null and  event_callmssage !=''">
+                and event_callmssage=#{event_callmssage}
+            </if>
+            <if test=" event_resulttime != null and  event_resulttime !=''">
+                and event_resulttime=#{event_resulttime}
+            </if>
+            <if test=" event_sourceno != null and  event_sourceno !=''">
+                and event_sourceno=#{event_sourceno}
+            </if>
+            <if test=" event_levelno != null and  event_levelno !=''">
+                and event_levelno=#{event_levelno}
+            </if>
+            <if test=" event_sourcetypeno != null and  event_sourcetypeno !=''">
+                and event_sourcetypeno=#{event_sourcetypeno}
+            </if>
+            <if test=" event_cjtime != null and  event_cjtime !=''">
+                and event_cjtime=#{event_cjtime}
+            </if>
+            <if test=" event_ywno != null and  event_ywno !=''">
+                and event_ywno=#{event_ywno}
+            </if>
+            <if test=" event_xzno != null and  event_xzno !=''">
+                and event_xzno=#{event_xzno}
+            </if>
+        </where>
+        ORDER BY event_cjtime desc
+        limit #{page},#{size}
+    </select>
+
+    <insert id="insertDataEventMssage">
+		INSERT INTO eventmssage(
+		  <if test="event_level != null and event_level !=''">
+              event_level,
+          </if>
+          <if test="event_sourcetype != null and event_sourcetype !=''">
+              event_sourcetype,
+          </if>
+          <if test="event_lx != null and event_lx !=''">
+              event_lx,
+          </if>
+          <if test="event_name != null and event_name !=''">
+              event_name,
+          </if>
+          <if test="event_reason != null and event_reason !=''">
+              event_reason,
+          </if>
+          <if test="event_describe != null and event_describe !=''">
+              event_describe,
+          </if>
+          <if test="event_addr != null and event_addr !=''">
+              event_addr,
+          </if>
+          <if test="event_longitude != null and event_longitude !=''">
+              event_longitude,
+          </if>
+          <if test="event_latitude != null and event_latitude !=''">
+              event_latitude,
+          </if>
+          <if test="event_happentime != null and event_happentime !=''">
+              event_happentime,
+          </if>
+          <if test="event_receivetime != null and event_receivetime !=''">
+              event_receivetime,
+          </if>
+          <if test="event_sendtime != null and event_sendtime !=''">
+              event_sendtime,
+          </if>
+          <if test="event_fillname != null and event_fillname !=''">
+              event_fillname,
+          </if>
+          <if test="event_fillphone != null and event_fillphone !=''">
+              event_fillphone,
+          </if>
+          <if test="event_filldept != null and event_filldept !=''">
+              event_filldept,
+          </if>
+          <if test="event_phonestarttime != null and  event_phonestarttime !=''">
+              event_phonestarttime,
+          </if>
+          <if test="event_phoneendtime != null and  event_phoneendtime !=''">
+              event_phoneendtime,
+          </if>
+          <if test="event_reportname != null and  event_reportname !=''">
+              event_reportname,
+          </if>
+          <if test="event_reportphone != null and  event_reportphone !=''">
+              event_reportphone,
+          </if>
+          <if test="event_reportpolitics != null and  event_reportpolitics !=''">
+              event_reportpolitics,
+          </if>
+          <if test="event_answername != null and  event_answername !=''">
+              event_answername,
+          </if>
+          <if test="event_mssagetype != null and  event_mssagetype !=''">
+              event_mssagetype,
+          </if>
+          <if test="event_cltype != null and  event_cltype !=''">
+              event_cltype,
+          </if>
+          <if test="event_responsibilitydept != null and  event_responsibilitydept !=''">
+              event_responsibilitydept,
+          </if>
+          <if test="event_handlemssage != null and  event_handlemssage !=''">
+              event_handlemssage,
+          </if>
+          <if test="event_resultmssage != null and  event_resultmssage !=''">
+              event_resultmssage,
+          </if>
+          <if test="event_callmssage != null and  event_callmssage !=''">
+              event_callmssage,
+          </if>
+          <if test="event_resulttime != null and  event_resulttime !=''">
+              event_resulttime,
+          </if>
+          <if test="event_lxno != null and  event_lxno !=''">
+              event_lxno,
+          </if>
+        <if test="event_sourceno != null and  event_sourceno !=''">
+             event_sourceno,
+        </if>
+        <if test="event_levelno != null and  event_levelno !=''">
+            event_levelno,
+        </if>
+        <if test="event_sourcetypeno != null and  event_sourcetypeno !=''">
+            event_sourcetypeno,
+        </if>
+        <if test=" event_cjtime != null and  event_cjtime !=''">
+             event_cjtime,
+        </if>
+        <if test=" event_ywno != null and  event_ywno !=''">
+            event_ywno,
+        </if>
+        <if test=" event_xzno != null and  event_xzno !=''">
+            event_xzno,
+        </if>
+        event_source)
+		VALUES
+		  (
+          <if test="event_level != null and event_level !=''">
+            #{event_level},
+          </if>
+          <if test="event_sourcetype != null and event_sourcetype !=''">
+            #{event_sourcetype},
+          </if>
+          <if test="event_lx != null and event_lx !=''">
+            #{event_lx},
+          </if>
+          <if test="event_name != null and event_name !=''">
+            #{event_name},
+          </if>
+          <if test="event_reason != null and event_reason !=''">
+            #{event_reason},
+          </if>
+          <if test="event_describe != null and event_describe !=''">
+            #{event_describe},
+          </if>
+          <if test="event_addr != null and event_addr !=''">
+            #{event_addr},
+          </if>
+          <if test="event_longitude != null and event_longitude !=''">
+            #{event_longitude},
+          </if>
+          <if test="event_latitude != null and event_latitude !=''">
+            #{event_latitude},
+          </if>
+          <if test="event_happentime != null and event_happentime !=''">
+            #{event_happentime},
+          </if>
+          <if test="event_receivetime != null and event_receivetime !=''">
+            #{event_receivetime},
+          </if>
+          <if test="event_sendtime != null and event_sendtime !=''">
+            #{event_sendtime},
+          </if>
+          <if test="event_fillname != null and event_fillname !=''">
+            #{event_fillname},
+          </if>
+          <if test="event_fillphone != null and event_fillphone !=''">
+            #{event_fillphone},
+          </if>
+          <if test="event_filldept != null and event_filldept !=''">
+            #{event_filldept},
+          </if>
+          <if test="event_phonestarttime != null and event_phonestarttime !=''">
+            #{event_phonestarttime},
+          </if>
+          <if test="event_phoneendtime != null and event_phoneendtime !=''">
+            #{event_phoneendtime},
+          </if>
+          <if test="event_reportname != null and event_reportname !=''">
+            #{event_reportname},
+          </if>
+          <if test="event_reportphone != null and event_reportphone !=''">
+            #{event_reportphone},
+          </if>
+          <if test="event_reportpolitics != null and event_reportpolitics !=''">
+            #{event_reportpolitics},
+          </if>
+          <if test="event_answername != null and event_answername !=''">
+            #{event_answername},
+          </if>
+          <if test="event_mssagetype != null and event_mssagetype !=''">
+            #{event_mssagetype},
+          </if>
+          <if test="event_cltype != null and event_cltype !=''">
+            #{event_cltype},
+          </if>
+          <if test="event_responsibilitydept != null and  event_responsibilitydept !=''">
+              #{event_responsibilitydept},
+          </if>
+          <if test="event_handlemssage != null and  event_handlemssage !=''">
+              #{event_handlemssage},
+          </if>
+          <if test="event_resultmssage != null and  event_resultmssage !=''">
+              #{event_resultmssage},
+          </if>
+          <if test="event_callmssage != null and  event_callmssage !=''">
+              #{event_callmssage},
+          </if>
+          <if test="event_resulttime != null and  event_resulttime !=''">
+              #{event_resulttime},
+        </if>
+        <if test="event_lxno != null and  event_lxno !=''">
+            #{event_lxno},
+        </if>
+        <if test="event_sourceno != null and  event_sourceno !=''">
+            #{event_sourceno},
+        </if>
+        <if test="event_levelno != null and  event_levelno !=''">
+            #{event_levelno},
+        </if>
+        <if test="event_sourcetypeno != null and  event_sourcetypeno !=''">
+            #{event_sourcetypeno},
+        </if>
+        <if test=" event_cjtime != null and  event_cjtime !=''">
+            #{event_cjtime},
+        </if>
+        <if test=" event_ywno != null and  event_ywno !=''">
+            #{event_ywno},
+        </if>
+        <if test=" event_xzno != null and  event_xzno !=''">
+            #{event_xzno},
+        </if>
+            #{event_source})
+	</insert>
+    <delete id="deleteDataEventMssage" parameterType="Map">
+		DELETE FROM eventmssage WHERE id = #{id}
+	</delete>
+
+    <update id="updateDataEventMssage" parameterType="Map">
+        UPDATE eventmssage
+        <set>
+            event_source =#{event_source}
+            <if test="event_level != null and event_level !=''">
+                ,event_level = #{event_level}
+            </if>
+            <if test="event_sourcetype != null and event_sourcetype !=''">
+                ,event_sourcetype = #{event_sourcetype}
+            </if>
+            <if test="event_lx != null and event_lx != ''">
+                ,event_lx = #{event_lx}
+            </if>
+            <if test="event_name != null and event_name !=''">
+                ,event_name = #{event_name}
+            </if>
+            <if test="event_reason != null and event_reason != ''">
+                ,event_reason = #{event_reason}
+            </if>
+            <if test="event_describe != null and event_describe != ''">
+                ,event_describe = #{event_describe}
+            </if>
+            <if test="event_addr != null and event_addr != ''">
+                ,event_addr = #{event_addr}
+            </if>
+            <if test="event_longitude != null and event_longitude != ''">
+                ,event_longitude = #{event_longitude}
+            </if>
+            <if test="event_latitude != null and event_latitude != ''">
+                ,event_latitude = #{event_latitude}
+            </if>
+            <if test="event_happentime != null and event_happentime != ''">
+                ,event_happentime = #{event_happentime}
+            </if>
+            <if test="event_receivetime != null and event_receivetime != ''">
+                ,event_receivetime = #{event_receivetime}
+            </if>
+            <if test="event_sendtime != null and event_sendtime != ''">
+                ,event_sendtime = #{event_sendtime}
+            </if>
+            <if test="event_fillname != null and event_fillname != ''">
+                ,event_fillname = #{event_fillname}
+            </if>
+            <if test="EVENT_FILLPHONE != null and EVENT_FILLPHONE != ''">
+                ,event_fillphone = #{EVENT_FILLPHONE}
+            </if>
+            <if test="event_filldept != null and event_filldept != ''">
+                ,event_filldept = #{event_filldept}
+            </if>
+            <if test="event_phonestarttime != null and event_phonestarttime != ''">
+                ,event_phonestarttime = #{event_phonestarttime}
+            </if>
+            <if test="event_phoneendtime != null and event_phoneendtime != ''">
+                ,event_phoneendtime = #{event_phoneendtime}
+            </if>
+            <if test="event_reportname != null and event_reportname != ''">
+                ,event_reportname = #{event_reportname}
+            </if>
+            <if test="event_reportphone != null and event_reportphone != ''">
+                ,event_reportphone = #{event_reportphone}
+            </if>
+            <if test="event_reportpolitics != null and event_reportpolitics != ''">
+                ,event_reportpolitics = #{event_reportpolitics}
+            </if>
+            <if test="event_answername != null and event_answername != ''">
+                ,event_answername = #{event_answername}
+            </if>
+            <if test="event_mssagetype != null and event_mssagetype != ''">
+                ,event_mssagetype = #{event_mssagetype}
+            </if>
+            <if test="event_cltype != null and event_cltype != ''">
+                ,event_cltype = #{event_cltype}
+            </if>
+            <if test=" event_responsibilitydept != null and  event_responsibilitydept !=''">
+                ,event_responsibilitydept=#{event_responsibilitydept}
+            </if>
+            <if test=" event_handlemssage != null and  event_handlemssage !=''">
+                ,event_handlemssage=#{event_handlemssage}
+            </if>
+            <if test=" event_resultmssage != null and  event_resultmssage !=''">
+                ,event_resultmssage=#{event_resultmssage}
+            </if>
+            <if test=" event_callmssage != null and  event_callmssage !=''">
+                ,event_callmssage=#{event_callmssage}
+            </if>
+            <if test=" event_resulttime != null and  event_resulttime !=''">
+                ,event_resulttime=#{event_resulttime}
+            </if>
+            <if test=" event_lxno != null and  event_lxno !=''">
+                ,event_lxno=#{event_lxno},
+            </if>
+            <if test=" event_sourceno != null and  event_sourceno !=''">
+                ,event_sourceno= #{event_sourceno}
+            </if>
+            <if test=" event_levelno != null and  event_levelno !=''">
+                ,event_levelno= #{event_levelno}
+            </if>
+            <if test=" event_sourcetypeno != null and  event_sourcetypeno !=''">
+                ,event_sourcetypeno= #{event_sourcetypeno}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>
